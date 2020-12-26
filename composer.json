@@ -6,6 +6,8 @@
     "type": "project",
     "require": {
         "php": ">=7.0.0",
+        "baijunyao/laravel-print": "^3.0",
+        "barryvdh/laravel-debugbar": "~3.3.3",
         "fideloper/proxy": "~3.3",
         "laravel-lang/lang": "~3.0",
         "laravel/framework": "5.5.*",
@@ -26,7 +28,10 @@
         ],
         "psr-4": {
             "App\\": "app/"
-        }
+        },
+        "files": [
+            "app/Helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

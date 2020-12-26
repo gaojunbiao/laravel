@@ -11,21 +11,40 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', 'Admin\LoginController@login');
+//后台路由
+Route::group(['prefix'=>'admin','namespace'=>'Admin'],function(){
+	//登录路由
+	Route::any('login', 'LoginController@login');
+	
 });
-Route::post('/test1',function(){
-	echo "test1";
-});
-Route::any('/test2',function(){
-	echo "test2";
-});
-Route::group(['prefix'=>'home/index'],function(){
-	Route::get('index', 'Home\IndexController@index');
-	Route::get('getuser','Home\IndexController@getuser');
-	Route::any('adduser','Home\IndexController@adduser');
-	Route::get('deleteuser','Home\IndexController@deleteuser');
-	Route::get('updateuser','Home\IndexController@updateuser');
+
+Route::group(['prefix'=>'admin','namespace'=>'Admin','middleware'=>'IsLogin'],function(){
+	//首页路由
+	Route::get('index', 'IndexController@index');
+	//欢迎页路由
+	Route::get('welcome', 'IndexController@welcome');
+	//退出登录路由
+	Route::get('logout', 'IndexController@logout');
+	//会员删除路由
+	Route::post('member/delAll', 'MemberController@delAll');
+	//会员上传头像路由
+	Route::post('member/upload', 'MemberController@upload');
+	//会员修改密码路由
+	Route::get('member/editpass/{id}', 'MemberController@editpass');
+	Route::post('member/editpass', 'MemberController@editpass');
+	//会员资源路由
+	Route::resource('member', 'MemberController');
+	//分类删除路由
+	Route::post('cate/delAll', 'CateController@delAll');
+	//分类增加子栏目
+	Route::get('cate/createson/{id}/{level}', 'CateController@createson');
+	Route::post('cate/createson', 'CateController@createson');
+	//分类排序
+	Route::get('cate/sort/{id}/{sort}', 'CateController@sort');
+	//分类资源路由
+	Route::resource('cate', 'CateController');
+
 });
 
 
